@@ -490,12 +490,15 @@ document.getElementById("randomBandButton").addEventListener("click", function (
 });
 </script>
 <script type="module">
-  import { initializeApp } from "https://www.gstatic.com/firebasejs/11.3.0/firebase-app.js";
-  import { getDatabase, ref, set, get, child } from "https://www.gstatic.com/firebasejs/11.3.0/firebase-database.js";
-  import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword, signOut, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/11.3.0/firebase-auth.js";
+import { initializeApp, getApp } from "https://www.gstatic.com/firebasejs/11.3.0/firebase-app.js";
+import { getDatabase, ref, set, get } from "https://www.gstatic.com/firebasejs/11.3.0/firebase-database.js";
+import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword, signOut, onAuthStateChanged} from "https://www.gstatic.com/firebasejs/11.3.0/firebase-auth.js";
 
-  // Your Firebase config
-  const firebaseConfig = {
+let app;
+try {
+  app = getApp(); // Try to get an already initialized Firebase app
+} catch (error) {
+  app = initializeApp({
     apiKey: "AIzaSyAoKv4PLrk4xvZF_IeUhfViwOLBYBv0czQ",
     authDomain: "punkarchivesdata.firebaseapp.com",
     projectId: "punkarchivesdata",
@@ -503,12 +506,13 @@ document.getElementById("randomBandButton").addEventListener("click", function (
     messagingSenderId: "272312472875",
     appId: "1:272312472875:web:048288b995db157dc8216e",
     measurementId: "G-24V1CEFHYP"
-  };
+  });
+}
 
-  // Initialize Firebase
-  const app = initializeApp(firebaseConfig);
-  const db = getDatabase(app);
-  const auth = getAuth();
+const db = getDatabase(app);
+const auth = getAuth(app);
+
+
 
 window.loadLeaderboard = function () {
   console.log("loadLeaderboard function is running!"); // Debugging message
